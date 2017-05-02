@@ -17,7 +17,7 @@ export class Zip {
       worker.postMessage({ action: 'unzip', archive, destination, overwrite, password });
       worker.onmessage = (msg) => {
         // console.log(`Received worker callback: ${JSON.stringify(msg)}`);
-        if (msg.data.progress) {
+        if (typeof msg.data.progress === 'number' && !isNaN(msg.data.progress)) {
           progressCallback(msg.data.progress);
         } else if (msg.data.result === true) {
           resolve();
